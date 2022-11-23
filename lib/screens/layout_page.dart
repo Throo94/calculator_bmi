@@ -1,5 +1,5 @@
-import 'package:calculator_bmi/screens/imperial_screen.dart';
-import 'package:calculator_bmi/screens/metrical_screen.dart';
+import 'package:calculator_bmi/screens/bmi_screen/bmi_screen.dart';
+import 'package:calculator_bmi/utils/units.dart';
 import 'package:flutter/material.dart';
 
 class LayoutPage extends StatefulWidget {
@@ -20,9 +20,13 @@ class _LayoutPageState extends State<LayoutPage> {
       body: Builder(
         builder: (context) {
           if (currentIndex == 0) {
-            return const MetricalScreen();
+            return BMIScreen(
+              units: MetricUnits(),
+            );
           } else {
-            return const ImperialScreen();
+            return BMIScreen(
+              units: ImperialUnits(),
+            );
           }
         },
       ),
