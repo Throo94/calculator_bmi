@@ -1,7 +1,6 @@
 import 'package:calculator_bmi/resources/text_styles.dart';
 import 'package:calculator_bmi/resources/mini_container.dart';
 import 'package:calculator_bmi/screens/bmi_screen/cubit/bmi_cubit.dart';
-import 'package:calculator_bmi/utils/bmi_calculator.dart';
 import 'package:calculator_bmi/utils/units.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +16,6 @@ class BMIScreen extends StatelessWidget {
       create: (context) => BMICubit(),
       child: BlocBuilder<BMICubit, BMIState>(
         builder: (context, state) {
-          var result = BmiCalculator.calculateBmi(state.weight, state.height);
-          var resultDetail = BmiCalculator.getInterpretation(result);
           return Scaffold(
             appBar: AppBar(
               title: const Text('Kalkulator BMI'),
@@ -59,7 +56,7 @@ class BMIScreen extends StatelessWidget {
                           activeColor: Colors.green,
                           onChanged: (double newValue) {
                             BlocProvider.of<BMICubit>(context)
-                                .onHeightChanged(state, newValue);
+                                .onHeightChanged(newValue);
                           },
                         ),
                       ],
@@ -100,7 +97,7 @@ class BMIScreen extends StatelessWidget {
                           activeColor: Colors.green,
                           onChanged: (double newValue) {
                             BlocProvider.of<BMICubit>(context)
-                                .onWeightChanged(state, newValue);
+                                .onWeightChanged(newValue);
                           },
                         ),
                       ],
@@ -121,11 +118,11 @@ class BMIScreen extends StatelessWidget {
                                 style: textStyle1,
                               ),
                               Text(
-                                result.toStringAsFixed(1),
+                                state.bmi.toStringAsFixed(1),
                                 style: textStyle2,
                               ),
                               Text(
-                                resultDetail,
+                                state.description,
                                 style: textStyle1,
                               ),
                             ],
